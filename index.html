@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>ベース指板ドリル</title>
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAAC9ElEQVR4nO1WP0gcaRx93/xDHKaxsFiUW3RBLBYiNluIFwvtbJSL4J8LqJtRxEK8WFyapBQ7jYFLYyN2sqAgNpfKLEqytyw2grDH4mIlLO4Vu7fzffOuGDInHhfiaIpAXjXFN++9ee/3fd8A3/EvNE0TQnwVaiGEpmnh8wOzh9Td3d1NTU23NB5G7Yd4vOfRo1gsdnV1lclkpJQkH4QZQojh4eG5ubnV1dV8Pk9yeXkZgGEYwQLjPuy6riulksnkyMhIb2/v9fV1JpPJ5XIAfN+/r/cw+vX1dZIkZ2Zm/rssYgeBd8dx9vf3j46OyuVyrVbb3t4GQPLO9oUQhmGEseq6DqClpSX7Pktyeno6msv/9Q6gtbX144ePJKempgBYlhXK3w1CCAGYpjk5Ofny5SvbtgG0tbUVCgWSs7OzuDEwUaBpmq7re3t7JI+Pj03T7OzsPDs7Izk/Pw/ANM3o7IG10dFRkpeXlwASiUSxWCS5uLgY3bsQQtf10Fr+jzzJfD6fSqWKxT9JLi0tRWcPpxuAZVlvf3tL8vT0dHx8vFQqkVxZWbmXdwC2bQ8MDLz49UWhUJBSuq77+MfHlUol9B4Rgfeenp7z83N+QjabBeA4zrvf321tbSWTSdu2x8bGopzJmqYZhhHMn+d5pVLp9cZrkjs7O83NzQAWFhaq1erFxcXBwQE+bYgvRbA6lUqRrNfqJDc3NwE8/+U5yaGhIQC5XI5kpVJpb2+/ecN8EYLS0um07/uNvxtSSs/znqWfAejr6wPw5KcnJNfW1jo6OhDh2goEnv78lGSj0VBKKaVITkxMBN9Xvii/2XwTLL6b95vvJBIJJZXneUopJZWUUik1ODjoui7JeDyu63r0gyGoYWNjg2S9XpdSSil936/Vap7nHR4e4q7F3kLQm2VZu7u74ZgGQZHs7+8Pdnh0AdyoznXdk5OTv6pVz/PK5XI6nUa06D+jASAWi3V1dTmOgwf/27kVxX2S+ZyvIJOgg8gC3z7+AROedJmdhNsnAAAAAElFTkSuQmCC">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="指板ドリル">
+<style>
+  :root{
+    --bg: #17140f;
+    --panel: #221d17;
+    --panel2: #2b241c;
+    --text: #f2ece0;
+    --muted: #9c9284;
+    --line: #3a3226;
+    --string-g: #6fa8ff;
+    --string-d: #7ac47f;
+    --string-a: #e8b84b;
+    --string-e: #e2647d;
+    --good: #6fcf7d;
+    --bad: #e2647d;
+    --lcd-bg: #0c1410;
+    --lcd-fg: #8ef58a;
+  }
+  *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html,body{ margin:0; padding:0; background:var(--bg); color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif;
+    -webkit-font-smoothing:antialiased; }
+  body{ min-height:100vh; padding-bottom:40px; }
+
+  .wrap{ max-width:480px; margin:0 auto; padding:18px 16px 0; }
+
+  header{ display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:14px; }
+  .brand{ display:flex; flex-direction:column; }
+  .brand .eyebrow{ font-size:11px; letter-spacing:.14em; color:var(--muted); font-weight:700; }
+  .brand h1{ margin:2px 0 0; font-size:22px; font-weight:800; letter-spacing:.02em; }
+  .brand h1 .accent{ color:var(--string-a); }
+
+  .tabs{ display:flex; background:var(--panel); border-radius:999px; padding:4px; margin-bottom:12px;
+    border:1px solid var(--line); }
+  .tab{ flex:1; text-align:center; padding:10px 0; border-radius:999px; font-weight:700; font-size:14px;
+    color:var(--muted); cursor:pointer; user-select:none; transition:.15s; }
+  .tab.active{ background:var(--string-a); color:#1a1305; }
+
+  .mode-row{ display:flex; gap:8px; margin-bottom:14px; }
+  .mode-btn{ flex:1; text-align:center; padding:10px 6px; border-radius:12px; font-weight:700; font-size:12.5px;
+    color:var(--muted); background:var(--panel2); border:1px solid var(--line); cursor:pointer; }
+  .mode-btn.active{ border-color:var(--string-a); color:var(--text); background:#3a2f18; }
+  .mode-btn .sub{ display:block; font-size:10.5px; color:var(--muted); font-weight:600; margin-top:2px; }
+
+  .card{ background:var(--panel); border:1px solid var(--line); border-radius:18px; padding:18px;
+    margin-bottom:14px; }
+
+  .session-row{ display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
+  .session-row .label{ font-size:12px; color:var(--muted); letter-spacing:.08em; }
+  .chip{ font-size:12px; font-weight:700; background:var(--panel2); border:1px solid var(--line);
+    border-radius:999px; padding:5px 12px; color:var(--text); font-variant-numeric:tabular-nums; }
+
+  .lcd{ background:var(--lcd-bg); border-radius:14px; padding:26px 18px; text-align:center;
+    border:1px solid #000; box-shadow: inset 0 2px 10px rgba(0,0,0,.6); margin-bottom:16px; }
+  .lcd .qtype{ font-family:'SFMono-Regular',Consolas,monospace; font-size:11px; letter-spacing:.18em;
+    color:#4f8a52; margin-bottom:8px; }
+  .lcd .qmain{ font-family:'SFMono-Regular',Consolas,monospace; font-size:40px; font-weight:700;
+    color:var(--lcd-fg); text-shadow:0 0 10px rgba(142,245,138,.45); letter-spacing:.03em; }
+  .lcd .qsub{ font-family:'SFMono-Regular',Consolas,monospace; font-size:15px; color:#5fbf66; margin-top:6px; }
+
+  .field-group{ margin-bottom:12px; }
+  .field-label{ font-size:12px; color:var(--muted); margin-bottom:6px; font-weight:700; }
+  .field-row{ display:flex; gap:10px; align-items:flex-end; }
+  input.ans{ width:100%; background:var(--panel2); border:1px solid var(--line); color:var(--text);
+    font-size:22px; font-weight:700; text-align:center; border-radius:12px; padding:14px 10px;
+    font-family:'SFMono-Regular',Consolas,monospace; }
+  input.ans:focus{ outline:2px solid var(--string-a); }
+  input.ans.small{ font-size:18px; padding:11px 8px; }
+
+  .multi-rows{ display:flex; flex-direction:column; gap:8px; margin-bottom:10px; }
+  .multi-row{ display:flex; gap:8px; align-items:center; }
+  .multi-row .field-group{ margin-bottom:0; flex:1; }
+  .row-remove{ background:transparent; border:1px solid var(--line); color:var(--muted);
+    width:38px; height:44px; border-radius:10px; font-size:18px; flex-shrink:0; }
+  .add-row-btn{ background:transparent; border:1px dashed var(--line); color:var(--muted);
+    width:100%; padding:10px; border-radius:10px; font-size:13px; font-weight:700; margin-bottom:14px; }
+
+  .btn{ display:block; width:100%; text-align:center; padding:15px; border-radius:12px; font-weight:800;
+    font-size:16px; letter-spacing:.02em; border:none; cursor:pointer; }
+  .btn-primary{ background:var(--string-a); color:#1a1305; }
+  .btn-primary:active{ transform:scale(.98); }
+
+  .feedback{ border-radius:14px; padding:16px; margin-bottom:14px; display:none; }
+  .feedback.correct{ background:rgba(111,207,125,.12); border:1px solid rgba(111,207,125,.4); }
+  .feedback.wrong{ background:rgba(226,100,125,.12); border:1px solid rgba(226,100,125,.4); }
+  .feedback .fh{ font-weight:800; font-size:16px; margin-bottom:6px; }
+  .feedback.correct .fh{ color:var(--good); }
+  .feedback.wrong .fh{ color:var(--bad); }
+  .feedback .fd{ font-size:13.5px; color:var(--muted); line-height:1.6; }
+  .feedback .fd b.ok{ color:var(--good); }
+  .feedback .fd b.no{ color:var(--bad); }
+
+  .stat-row{ display:flex; gap:10px; margin-bottom:14px; }
+  .stat-box{ flex:1; background:var(--panel2); border:1px solid var(--line); border-radius:14px;
+    padding:14px; text-align:center; }
+  .stat-box .num{ font-size:24px; font-weight:800; font-family:'SFMono-Regular',Consolas,monospace; }
+  .stat-box .lab{ font-size:11px; color:var(--muted); margin-top:2px; letter-spacing:.06em; }
+
+  .legend-row{ display:flex; gap:14px; margin-bottom:10px; flex-wrap:wrap; }
+  .legend-item{ display:flex; align-items:center; gap:6px; font-size:12px; color:var(--muted); }
+  .dot{ width:10px; height:10px; border-radius:50%; }
+
+  .grid-scroll{ overflow-x:auto; border-radius:12px; border:1px solid var(--line); }
+  .grid{ display:grid; grid-template-columns: 46px repeat(20, 30px); width:max-content; }
+  .cell{ height:30px; display:flex; align-items:center; justify-content:center; font-size:9px;
+    font-family:'SFMono-Regular',Consolas,monospace; border-right:1px solid rgba(0,0,0,.25);
+    border-bottom:1px solid rgba(0,0,0,.25); color:#0d0b08; font-weight:700; }
+  .rowhead{ position:sticky; left:0; display:flex; align-items:center; justify-content:center;
+    font-size:11px; font-weight:800; border-right:1px solid var(--line); background:var(--panel2);
+    color:var(--text); }
+  .colhead{ height:20px; font-size:9px; color:var(--muted); display:flex; align-items:center;
+    justify-content:center; background:var(--panel); }
+  .corner{ background:var(--panel); }
+
+  .weak-list{ margin-top:14px; }
+  .weak-item{ display:flex; justify-content:space-between; align-items:center; padding:10px 12px;
+    background:var(--panel2); border-radius:10px; margin-bottom:8px; border:1px solid var(--line); }
+  .weak-item .pos{ font-weight:700; font-size:14px; }
+  .weak-item .pct{ font-family:'SFMono-Regular',Consolas,monospace; font-weight:800; }
+
+  .empty{ text-align:center; color:var(--muted); font-size:13px; padding:20px 0; }
+
+  .reset-btn{ margin-top:16px; background:transparent; border:1px solid var(--bad); color:var(--bad);
+    width:100%; padding:12px; border-radius:12px; font-weight:700; font-size:13px; }
+
+  .hint{ font-size:12px; color:var(--muted); text-align:center; margin-top:6px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <span class="eyebrow">4弦ベース・#表記のみ</span>
+      <h1>指板<span class="accent">ドリル</span></h1>
+    </div>
+  </header>
+
+  <div class="tabs">
+    <div class="tab active" id="tabQuiz" onclick="switchTab('quiz')">クイズ</div>
+    <div class="tab" id="tabStats" onclick="switchTab('stats')">分析</div>
+  </div>
+
+  <!-- QUIZ VIEW -->
+  <div id="viewQuiz">
+    <div class="mode-row">
+      <div class="mode-btn active" id="modeAll" onclick="setMode('all')">1〜4弦<span class="sub">全弦</span></div>
+      <div class="mode-btn" id="modeLower" onclick="setMode('lower')">3・4弦<span class="sub">下2弦のみ</span></div>
+    </div>
+    <div class="mode-row">
+      <div class="mode-btn active" id="qmodeMix" onclick="setQMode('mix')">ミックス<span class="sub">両方出題</span></div>
+      <div class="mode-btn" id="qmodeToNote" onclick="setQMode('toNote')">位置→音名<span class="sub">弦・フレットを見て答える</span></div>
+      <div class="mode-btn" id="qmodeToPos" onclick="setQMode('toPos')">音名→位置<span class="sub">音名を見て答える</span></div>
+    </div>
+
+    <div class="card">
+      <div class="session-row">
+        <span class="label">今回のセッション</span>
+        <span class="chip" id="sessionChip">0 / 0</span>
+      </div>
+
+      <div class="lcd">
+        <div class="qtype" id="qType">POSITION → NOTE</div>
+        <div class="qmain" id="qMain">-</div>
+        <div class="qsub" id="qSub"></div>
+      </div>
+
+      <div id="answerArea"></div>
+
+      <div class="feedback" id="feedback">
+        <div class="fh" id="fbHead"></div>
+        <div class="fd" id="fbDetail"></div>
+      </div>
+
+      <button class="btn btn-primary" id="mainBtn" onclick="onMainBtn()">回答する</button>
+    </div>
+  </div>
+
+  <!-- STATS VIEW -->
+  <div id="viewStats" style="display:none;">
+    <div class="card">
+      <div class="stat-row">
+        <div class="stat-box"><div class="num" id="statTotal">0</div><div class="lab">総回答数</div></div>
+        <div class="stat-box"><div class="num" id="statAcc">-</div><div class="lab">正解率</div></div>
+      </div>
+
+      <div class="legend-row">
+        <div class="legend-item"><span class="dot" style="background:var(--string-g)"></span>1弦(G)</div>
+        <div class="legend-item"><span class="dot" style="background:var(--string-d)"></span>2弦(D)</div>
+        <div class="legend-item"><span class="dot" style="background:var(--string-a)"></span>3弦(A)</div>
+        <div class="legend-item"><span class="dot" style="background:var(--string-e)"></span>4弦(E)</div>
+      </div>
+      <p class="hint" style="margin-bottom:10px;">色が濃いほど正解率が高い。グレーは未挑戦、横スクロールできます。</p>
+
+      <div class="grid-scroll">
+        <div class="grid" id="heatGrid"></div>
+      </div>
+
+      <div class="weak-list" id="weakList"></div>
+
+      <button class="reset-btn" onclick="resetStats()">記録をリセット</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const CHROM = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+const STRINGS = [
+  {id:1, name:'1弦', open:'G', openIdx:7, color:'var(--string-g)'},
+  {id:2, name:'2弦', open:'D', openIdx:2, color:'var(--string-d)'},
+  {id:3, name:'3弦', open:'A', openIdx:9, color:'var(--string-a)'},
+  {id:4, name:'4弦', open:'E', openIdx:4, color:'var(--string-e)'},
+];
+const MAX_FRET = 20;
+const STATS_KEY = 'bass-fretboard-quiz-stats-v1';
+const MODE_KEY = 'bass-fretboard-quiz-mode-v1';
+const QMODE_KEY = 'bass-fretboard-quiz-qmode-v1';
+
+let stats = {};
+let session = {correct:0, total:0};
+let current = null;
+let awaitingNext = false;
+let mode = 'all'; // 'all' -> strings 1-4, 'lower' -> strings 3-4
+let qMode = 'mix'; // 'mix' | 'toNote' | 'toPos'
+let rowCount = 0;
+
+function stringPool(){ return mode === 'lower' ? [3,4] : [1,2,3,4]; }
+
+function noteAt(stringId, fret){
+  const s = STRINGS.find(s=>s.id===stringId);
+  return CHROM[(s.openIdx + fret) % 12];
+}
+function cellKey(stringId, fret){ return stringId+'-'+fret; }
+
+async function loadStats(){
+  try{
+    const res = await window.storage.get(STATS_KEY, false);
+    if(res && res.value){ stats = JSON.parse(res.value); }
+  }catch(e){ stats = {}; }
+}
+async function saveStats(){
+  try{ await window.storage.set(STATS_KEY, JSON.stringify(stats), false); }
+  catch(e){ /* best-effort */ }
+}
+async function loadMode(){
+  try{
+    const res = await window.storage.get(MODE_KEY, false);
+    if(res && res.value && (res.value === 'all' || res.value === 'lower')){ mode = res.value; }
+  }catch(e){ /* default stays 'all' */ }
+}
+async function saveMode(){
+  try{ await window.storage.set(MODE_KEY, mode, false); }
+  catch(e){ /* best-effort */ }
+}
+async function loadQMode(){
+  try{
+    const res = await window.storage.get(QMODE_KEY, false);
+    if(res && res.value && ['mix','toNote','toPos'].includes(res.value)){ qMode = res.value; }
+  }catch(e){ /* default stays 'mix' */ }
+}
+async function saveQMode(){
+  try{ await window.storage.set(QMODE_KEY, qMode, false); }
+  catch(e){ /* best-effort */ }
+}
+
+function recordAnswer(stringId, fret, correct){
+  const k = cellKey(stringId, fret);
+  if(!stats[k]) stats[k] = {correct:0, total:0};
+  stats[k].total++;
+  if(correct) stats[k].correct++;
+}
+
+function randInt(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+
+function setMode(m){
+  mode = m;
+  document.getElementById('modeAll').classList.toggle('active', m==='all');
+  document.getElementById('modeLower').classList.toggle('active', m==='lower');
+  saveMode();
+  session = {correct:0, total:0};
+  updateSessionChip();
+  newQuestion();
+}
+
+function setQMode(m){
+  qMode = m;
+  document.getElementById('qmodeMix').classList.toggle('active', m==='mix');
+  document.getElementById('qmodeToNote').classList.toggle('active', m==='toNote');
+  document.getElementById('qmodeToPos').classList.toggle('active', m==='toPos');
+  saveQMode();
+  session = {correct:0, total:0};
+  updateSessionChip();
+  newQuestion();
+}
+
+function solutionPositions(note){
+  const positions = [];
+  stringPool().forEach(sId=>{
+    for(let f=1; f<=MAX_FRET; f++){
+      if(noteAt(sId,f) === note) positions.push({stringId:sId, fret:f});
+    }
+  });
+  return positions;
+}
+
+function addAnswerRow(container){
+  rowCount++;
+  const rowId = 'row'+rowCount;
+  const div = document.createElement('div');
+  div.className = 'multi-row';
+  div.id = rowId;
+  div.innerHTML = `
+    <div class="field-group">
+      <div class="field-label">弦</div>
+      <input class="ans small posinput" type="text" autocapitalize="characters" autocomplete="off" maxlength="1" placeholder="1〜4">
+    </div>
+    <div class="field-group">
+      <div class="field-label">フレット</div>
+      <input class="ans small posinput" type="number" inputmode="numeric" autocomplete="off" placeholder="1〜20" min="1" max="20">
+    </div>
+    <button class="row-remove" onclick="document.getElementById('${rowId}').remove()">×</button>`;
+  container.appendChild(div);
+}
+
+function newQuestion(){
+  awaitingNext = false;
+  document.getElementById('feedback').style.display = 'none';
+  document.getElementById('feedback').className = 'feedback';
+  document.getElementById('mainBtn').textContent = '回答する';
+
+  const pool = stringPool();
+  const stringId = pool[randInt(0, pool.length-1)];
+  const fret = randInt(1,MAX_FRET);
+  const note = noteAt(stringId, fret);
+  const type = qMode === 'mix' ? (Math.random() < 0.5 ? 'toNote' : 'toPos') : qMode;
+  current = {type, stringId, fret, note};
+
+  const s = STRINGS.find(s=>s.id===stringId);
+  const qType = document.getElementById('qType');
+  const qMain = document.getElementById('qMain');
+  const qSub = document.getElementById('qSub');
+  const answerArea = document.getElementById('answerArea');
+
+  if(type === 'toNote'){
+    qType.textContent = 'POSITION → NOTE';
+    qMain.textContent = s.name + ' ' + fret + 'F';
+    qSub.textContent = '';
+    answerArea.innerHTML = `
+      <div class="field-group">
+        <div class="field-label">音名を入力 (例: C#)</div>
+        <input class="ans" id="inpNote" type="text" autocapitalize="characters" autocomplete="off"
+          maxlength="3" placeholder="C#" inputmode="text">
+      </div>`;
+    setTimeout(()=>{ const el=document.getElementById('inpNote'); if(el) el.focus(); }, 50);
+  } else {
+    current.solution = solutionPositions(note);
+    qType.textContent = 'NOTE → ALL POSITIONS';
+    qMain.textContent = note;
+    qSub.textContent = '該当する位置を全部入力';
+    answerArea.innerHTML = `<div class="multi-rows" id="multiRows"></div>
+      <button class="add-row-btn" onclick="addAnswerRow(document.getElementById('multiRows'))">+ 位置を追加</button>`;
+    const container = document.getElementById('multiRows');
+    const startRows = Math.max(3, current.solution.length - 1);
+    for(let i=0; i<startRows; i++) addAnswerRow(container);
+  }
+}
+
+function normalizeNoteInput(v){
+  if(!v) return '';
+  return v.trim().toUpperCase().replace(/♯/g,'#').replace(/SHARP/g,'#');
+}
+function parseStringInput(v){
+  if(!v) return null;
+  const t = v.trim().toUpperCase();
+  if(['1','2','3','4'].includes(t)) return parseInt(t,10);
+  const found = STRINGS.find(s=>s.open === t);
+  return found ? found.id : null;
+}
+
+function onMainBtn(){
+  if(awaitingNext){ newQuestion(); return; }
+  checkAnswer();
+}
+
+function checkAnswer(){
+  if(!current) return;
+  let correct = false;
+  const fb = document.getElementById('feedback');
+  const fh = document.getElementById('fbHead');
+  const fd = document.getElementById('fbDetail');
+
+  if(current.type === 'toNote'){
+    const raw = document.getElementById('inpNote').value;
+    const norm = normalizeNoteInput(raw);
+    correct = norm === current.note;
+    session.total++;
+    if(correct) session.correct++;
+    recordAnswer(current.stringId, current.fret, correct);
+    saveStats();
+    fb.className = 'feedback ' + (correct ? 'correct' : 'wrong');
+    fh.textContent = correct ? '正解!' : '不正解';
+    fd.innerHTML = correct ? '' : ('正解: <b class="ok">' + current.note + '</b>');
+  } else {
+    const rows = document.querySelectorAll('#multiRows .multi-row');
+    const guessed = new Map();
+    rows.forEach(row=>{
+      const inputs = row.querySelectorAll('.posinput');
+      const sId = parseStringInput(inputs[0].value);
+      const fret = parseInt(inputs[1].value, 10);
+      if(sId && fret >= 1 && fret <= MAX_FRET){
+        guessed.set(cellKey(sId,fret), {stringId:sId, fret});
+      }
+    });
+
+    const solutionKeys = new Set(current.solution.map(p=>cellKey(p.stringId,p.fret)));
+    const guessedKeys = new Set(guessed.keys());
+
+    const found = [...solutionKeys].filter(k=>guessedKeys.has(k));
+    const missed = [...solutionKeys].filter(k=>!guessedKeys.has(k));
+    const extra = [...guessedKeys].filter(k=>!solutionKeys.has(k));
+
+    correct = missed.length === 0 && extra.length === 0;
+    session.total++;
+    if(correct) session.correct++;
+
+    current.solution.forEach(p=>{
+      recordAnswer(p.stringId, p.fret, found.includes(cellKey(p.stringId,p.fret)));
+    });
+    saveStats();
+
+    const posLabel = (k)=>{
+      const [sId,f] = k.split('-').map(Number);
+      const s = STRINGS.find(s=>s.id===sId);
+      return s.name + ' ' + f + 'F';
+    };
+
+    fb.className = 'feedback ' + (correct ? 'correct' : 'wrong');
+    fh.textContent = correct ? '正解! 全部見つけました' : '惜しい、抜けや勘違いがあります';
+    let detail = '';
+    detail += '<b class="ok">正しく回答: ' + (found.length ? found.map(posLabel).join(' / ') : 'なし') + '</b><br>';
+    if(missed.length) detail += '<b class="no">見つけられなかった: ' + missed.map(posLabel).join(' / ') + '</b><br>';
+    if(extra.length) detail += '<b class="no">この音ではない位置: ' + extra.map(posLabel).join(' / ') + '</b>';
+    fd.innerHTML = detail;
+  }
+
+  updateSessionChip();
+  fb.style.display = 'block';
+  document.getElementById('mainBtn').textContent = '次の問題へ';
+  awaitingNext = true;
+}
+
+function updateSessionChip(){
+  document.getElementById('sessionChip').textContent = session.correct + ' / ' + session.total;
+}
+
+function switchTab(tab){
+  const isQuiz = tab === 'quiz';
+  document.getElementById('viewQuiz').style.display = isQuiz ? 'block' : 'none';
+  document.getElementById('viewStats').style.display = isQuiz ? 'none' : 'block';
+  document.getElementById('tabQuiz').classList.toggle('active', isQuiz);
+  document.getElementById('tabStats').classList.toggle('active', !isQuiz);
+  if(!isQuiz) renderStats();
+}
+
+function accuracyColor(correct, total){
+  if(total === 0) return '#3a3226';
+  const pct = correct/total;
+  const hue = pct * 120;
+  return `hsl(${hue}, 55%, 45%)`;
+}
+
+function renderStats(){
+  let totalAll = 0, correctAll = 0;
+  Object.values(stats).forEach(v=>{ totalAll += v.total; correctAll += v.correct; });
+  document.getElementById('statTotal').textContent = totalAll;
+  document.getElementById('statAcc').textContent = totalAll ? Math.round(correctAll/totalAll*100) + '%' : '-';
+
+  const grid = document.getElementById('heatGrid');
+  let html = '<div class="corner"></div>';
+  for(let f=1; f<=MAX_FRET; f++){ html += `<div class="colhead">${f}</div>`; }
+  STRINGS.forEach(s=>{
+    html += `<div class="rowhead" style="color:${s.color}">${s.name}</div>`;
+    for(let f=1; f<=MAX_FRET; f++){
+      const k = cellKey(s.id, f);
+      const st = stats[k];
+      const bg = st ? accuracyColor(st.correct, st.total) : '#2b241c';
+      const label = noteAt(s.id, f);
+      html += `<div class="cell" style="background:${bg}">${st ? label : ''}</div>`;
+    }
+  });
+  grid.innerHTML = html;
+
+  const cells = Object.entries(stats)
+    .filter(([k,v]) => v.total >= 3)
+    .map(([k,v]) => {
+      const [sId, fret] = k.split('-').map(Number);
+      const s = STRINGS.find(s=>s.id===sId);
+      return { s, fret, pct: v.correct/v.total, total: v.total };
+    })
+    .sort((a,b) => a.pct - b.pct)
+    .slice(0,5);
+
+  const weakList = document.getElementById('weakList');
+  if(cells.length === 0){
+    weakList.innerHTML = '<div class="empty">3回以上挑戦した組み合わせが集まると、苦手なポジションがここに表示されます。</div>';
+  } else {
+    weakList.innerHTML = '<div class="field-label" style="margin-bottom:8px;">苦手なポジション TOP5</div>' +
+      cells.map(c => `
+        <div class="weak-item">
+          <span class="pos" style="color:${c.s.color}">${c.s.name} ${c.fret}F (${noteAt(c.s.id,c.fret)})</span>
+          <span class="pct">${Math.round(c.pct*100)}%</span>
+        </div>`).join('');
+  }
+}
+
+async function resetStats(){
+  if(!confirm('記録をすべてリセットします。よろしいですか?')) return;
+  stats = {};
+  await saveStats();
+  renderStats();
+}
+
+(async function init(){
+  await loadStats();
+  await loadMode();
+  await loadQMode();
+  document.getElementById('modeAll').classList.toggle('active', mode==='all');
+  document.getElementById('modeLower').classList.toggle('active', mode==='lower');
+  document.getElementById('qmodeMix').classList.toggle('active', qMode==='mix');
+  document.getElementById('qmodeToNote').classList.toggle('active', qMode==='toNote');
+  document.getElementById('qmodeToPos').classList.toggle('active', qMode==='toPos');
+  updateSessionChip();
+  newQuestion();
+
+  document.addEventListener('keydown', (e)=>{
+    if(e.key === 'Enter'){ onMainBtn(); }
+  });
+})();
+</script>
+</body>
+</html>
