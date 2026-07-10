@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>ベース指板ドリル</title>
+<style>
+  :root{
+    --bg: #17140f;
+    --panel: #221d17;
+    --panel2: #2b241c;
+    --text: #f2ece0;
+    --muted: #9c9284;
+    --line: #3a3226;
+    --string-g: #6fa8ff;
+    --string-d: #7ac47f;
+    --string-a: #e8b84b;
+    --string-e: #e2647d;
+    --good: #6fcf7d;
+    --bad: #e2647d;
+    --lcd-bg: #0c1410;
+    --lcd-fg: #8ef58a;
+  }
+  *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html,body{ margin:0; padding:0; background:var(--bg); color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif;
+    -webkit-font-smoothing:antialiased; }
+  body{ min-height:100vh; padding-bottom:40px; }
+
+  .wrap{ max-width:480px; margin:0 auto; padding:18px 16px 0; }
+
+  header{ display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:14px; }
+  .brand{ display:flex; flex-direction:column; }
+  .brand .eyebrow{ font-size:11px; letter-spacing:.14em; color:var(--muted); font-weight:700; }
+  .brand h1{ margin:2px 0 0; font-size:22px; font-weight:800; letter-spacing:.02em; }
+  .brand h1 .accent{ color:var(--string-a); }
+
+  .tabs{ display:flex; background:var(--panel); border-radius:999px; padding:4px; margin-bottom:12px;
+    border:1px solid var(--line); }
+  .tab{ flex:1; text-align:center; padding:10px 0; border-radius:999px; font-weight:700; font-size:14px;
+    color:var(--muted); cursor:pointer; user-select:none; transition:.15s; }
+  .tab.active{ background:var(--string-a); color:#1a1305; }
+
+  .mode-row{ display:flex; gap:8px; margin-bottom:14px; }
+  .mode-btn{ flex:1; text-align:center; padding:10px 6px; border-radius:12px; font-weight:700; font-size:12.5px;
+    color:var(--muted); background:var(--panel2); border:1px solid var(--line); cursor:pointer; }
+  .mode-btn.active{ border-color:var(--string-a); color:var(--text); background:#3a2f18; }
+  .mode-btn .sub{ display:block; font-size:10.5px; color:var(--muted); font-weight:600; margin-top:2px; }
+
+  .card{ background:var(--panel); border:1px solid var(--line); border-radius:18px; padding:18px;
+    margin-bottom:14px; }
+
+  .session-row{ display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
+  .session-row .label{ font-size:12px; color:var(--muted); letter-spacing:.08em; }
+  .chip{ font-size:12px; font-weight:700; background:var(--panel2); border:1px solid var(--line);
+    border-radius:999px; padding:5px 12px; color:var(--text); font-variant-numeric:tabular-nums; }
+
+  .lcd{ background:var(--lcd-bg); border-radius:14px; padding:26px 18px; text-align:center;
+    border:1px solid #000; box-shadow: inset 0 2px 10px rgba(0,0,0,.6); margin-bottom:16px; }
+  .lcd .qtype{ font-family:'SFMono-Regular',Consolas,monospace; font-size:11px; letter-spacing:.18em;
+    color:#4f8a52; margin-bottom:8px; }
+  .lcd .qmain{ font-family:'SFMono-Regular',Consolas,monospace; font-size:40px; font-weight:700;
+    color:var(--lcd-fg); text-shadow:0 0 10px rgba(142,245,138,.45); letter-spacing:.03em; }
+  .lcd .qsub{ font-family:'SFMono-Regular',Consolas,monospace; font-size:15px; color:#5fbf66; margin-top:6px; }
+
+  .field-group{ margin-bottom:12px; }
+  .field-label{ font-size:12px; color:var(--muted); margin-bottom:6px; font-weight:700; }
+  .field-row{ display:flex; gap:10px; align-items:flex-end; }
+  input.ans{ width:100%; background:var(--panel2); border:1px solid var(--line); color:var(--text);
+    font-size:22px; font-weight:700; text-align:center; border-radius:12px; padding:14px 10px;
+    font-family:'SFMono-Regular',Consolas,monospace; }
+  input.ans:focus{ outline:2px solid var(--string-a); }
+  input.ans.small{ font-size:18px; padding:11px 8px; }
+
+  .multi-rows{ display:flex; flex-direction:column; gap:8px; margin-bottom:10px; }
+  .multi-row{ display:flex; gap:8px; align-items:center; }
+  .multi-row .field-group{ margin-bottom:0; flex:1; }
+  .row-remove{ background:transparent; border:1px solid var(--line); color:var(--muted);
+    width:38px; height:44px; border-radius:10px; font-size:18px; flex-shrink:0; }
+  .add-row-btn{ background:transparent; border:1px dashed var(--line); color:var(--muted);
+    width:100%; padding:10px; border-radius:10px; font-size:13px; font-weight:700; margin-bottom:14px; }
+
+  .btn{ display:block; width:100%; text-align:center; padding:15px; border-radius:12px; font-weight:800;
+    font-size:16px; letter-spacing:.02em; border:none; cursor:pointer; }
+  .btn-primary{ background:var(--string-a); color:#1a1305; }
+  .btn-primary:active{ transform:scale(.98); }
+
+  .feedback{ border-radius:14px; padding:16px; margin-bottom:14px; display:none; }
+  .feedback.correct{ background:rgba(111,207,125,.12); border:1px solid rgba(111,207,125,.4); }
+  .feedback.wrong{ background:rgba(226,100,125,.12); border:1px solid rgba(226,100,125,.4); }
+  .feedback .fh{ font-weight:800; font-size:16px; margin-bottom:6px; }
+  .feedback.correct .fh{ color:var(--good); }
+  .feedback.wrong .fh{ color:var(--bad); }
+  .feedback .fd{ font-size:13.5px; color:var(--muted); line-height:1.6; }
+  .feedback .fd b.ok{ color:var(--good); }
+  .feedback .fd b.no{ color:var(--bad); }
+
+  .stat-row{ display:flex; gap:10px; margin-bottom:14px; }
+  .stat-box{ flex:1; background:var(--panel2); border:1px solid var(--line); border-radius:14px;
+    padding:14px; text-align:center; }
+  .stat-box .num{ font-size:24px; font-weight:800; font-family:'SFMono-Regular',Consolas,monospace; }
+  .stat-box .lab{ font-size:11px; color:var(--muted); margin-top:2px; letter-spacing:.06em; }
+
+  .legend-row{ display:flex; gap:14px; margin-bottom:10px; flex-wrap:wrap; }
+  .legend-item{ display:flex; align-items:center; gap:6px; font-size:12px; color:var(--muted); }
+  .dot{ width:10px; height:10px; border-radius:50%; }
+
+  .grid-scroll{ overflow-x:auto; border-radius:12px; border:1px solid var(--line); }
+  .grid{ display:grid; grid-template-columns: 46px repeat(20, 30px); width:max-content; }
+  .cell{ height:30px; display:flex; align-items:center; justify-content:center; font-size:9px;
+    font-family:'SFMono-Regular',Consolas,monospace; border-right:1px solid rgba(0,0,0,.25);
+    border-bottom:1px solid rgba(0,0,0,.25); color:#0d0b08; font-weight:700; }
+  .rowhead{ position:sticky; left:0; display:flex; align-items:center; justify-content:center;
+    font-size:11px; font-weight:800; border-right:1px solid var(--line); background:var(--panel2);
+    color:var(--text); }
+  .colhead{ height:20px; font-size:9px; color:var(--muted); display:flex; align-items:center;
+    justify-content:center; background:var(--panel); }
+  .corner{ background:var(--panel); }
+
+  .weak-list{ margin-top:14px; }
+  .weak-item{ display:flex; justify-content:space-between; align-items:center; padding:10px 12px;
+    background:var(--panel2); border-radius:10px; margin-bottom:8px; border:1px solid var(--line); }
+  .weak-item .pos{ font-weight:700; font-size:14px; }
+  .weak-item .pct{ font-family:'SFMono-Regular',Consolas,monospace; font-weight:800; }
+
+  .empty{ text-align:center; color:var(--muted); font-size:13px; padding:20px 0; }
+
+  .reset-btn{ margin-top:16px; background:transparent; border:1px solid var(--bad); color:var(--bad);
+    width:100%; padding:12px; border-radius:12px; font-weight:700; font-size:13px; }
+
+  .hint{ font-size:12px; color:var(--muted); text-align:center; margin-top:6px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <span class="eyebrow">4弦ベース・#表記のみ</span>
+      <h1>指板<span class="accent">ドリル</span></h1>
+    </div>
+  </header>
+
+  <div class="tabs">
+    <div class="tab active" id="tabQuiz" onclick="switchTab('quiz')">クイズ</div>
+    <div class="tab" id="tabStats" onclick="switchTab('stats')">分析</div>
+  </div>
+
+  <!-- QUIZ VIEW -->
+  <div id="viewQuiz">
+    <div class="mode-row">
+      <div class="mode-btn active" id="modeAll" onclick="setMode('all')">1〜4弦<span class="sub">全弦</span></div>
+      <div class="mode-btn" id="modeLower" onclick="setMode('lower')">3・4弦<span class="sub">下2弦のみ</span></div>
+    </div>
+    <div class="mode-row">
+      <div class="mode-btn active" id="qmodeMix" onclick="setQMode('mix')">ミックス<span class="sub">両方出題</span></div>
+      <div class="mode-btn" id="qmodeToNote" onclick="setQMode('toNote')">位置→音名<span class="sub">弦・フレットを見て答える</span></div>
+      <div class="mode-btn" id="qmodeToPos" onclick="setQMode('toPos')">音名→位置<span class="sub">音名を見て答える</span></div>
+    </div>
+
+    <div class="card">
+      <div class="session-row">
+        <span class="label">今回のセッション</span>
+        <span class="chip" id="sessionChip">0 / 0</span>
+      </div>
+
+      <div class="lcd">
+        <div class="qtype" id="qType">POSITION → NOTE</div>
+        <div class="qmain" id="qMain">-</div>
+        <div class="qsub" id="qSub"></div>
+      </div>
+
+      <div id="answerArea"></div>
+
+      <div class="feedback" id="feedback">
+        <div class="fh" id="fbHead"></div>
+        <div class="fd" id="fbDetail"></div>
+      </div>
+
+      <button class="btn btn-primary" id="mainBtn" onclick="onMainBtn()">回答する</button>
+    </div>
+  </div>
+
+  <!-- STATS VIEW -->
+  <div id="viewStats" style="display:none;">
+    <div class="card">
+      <div class="stat-row">
+        <div class="stat-box"><div class="num" id="statTotal">0</div><div class="lab">総回答数</div></div>
+        <div class="stat-box"><div class="num" id="statAcc">-</div><div class="lab">正解率</div></div>
+      </div>
+
+      <div class="legend-row">
+        <div class="legend-item"><span class="dot" style="background:var(--string-g)"></span>1弦(G)</div>
+        <div class="legend-item"><span class="dot" style="background:var(--string-d)"></span>2弦(D)</div>
+        <div class="legend-item"><span class="dot" style="background:var(--string-a)"></span>3弦(A)</div>
+        <div class="legend-item"><span class="dot" style="background:var(--string-e)"></span>4弦(E)</div>
+      </div>
+      <p class="hint" style="margin-bottom:10px;">色が濃いほど正解率が高い。グレーは未挑戦、横スクロールできます。</p>
+
+      <div class="grid-scroll">
+        <div class="grid" id="heatGrid"></div>
+      </div>
+
+      <div class="weak-list" id="weakList"></div>
+
+      <button class="reset-btn" onclick="resetStats()">記録をリセット</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const CHROM = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+const STRINGS = [
+  {id:1, name:'1弦', open:'G', openIdx:7, color:'var(--string-g)'},
+  {id:2, name:'2弦', open:'D', openIdx:2, color:'var(--string-d)'},
+  {id:3, name:'3弦', open:'A', openIdx:9, color:'var(--string-a)'},
+  {id:4, name:'4弦', open:'E', openIdx:4, color:'var(--string-e)'},
+];
+const MAX_FRET = 20;
+const STATS_KEY = 'bass-fretboard-quiz-stats-v1';
+const MODE_KEY = 'bass-fretboard-quiz-mode-v1';
+const QMODE_KEY = 'bass-fretboard-quiz-qmode-v1';
+
+let stats = {};
+let session = {correct:0, total:0};
+let current = null;
+let awaitingNext = false;
+let mode = 'all'; // 'all' -> strings 1-4, 'lower' -> strings 3-4
+let qMode = 'mix'; // 'mix' | 'toNote' | 'toPos'
+let rowCount = 0;
+
+function stringPool(){ return mode === 'lower' ? [3,4] : [1,2,3,4]; }
+
+function noteAt(stringId, fret){
+  const s = STRINGS.find(s=>s.id===stringId);
+  return CHROM[(s.openIdx + fret) % 12];
+}
+function cellKey(stringId, fret){ return stringId+'-'+fret; }
+
+async function loadStats(){
+  try{
+    const res = await window.storage.get(STATS_KEY, false);
+    if(res && res.value){ stats = JSON.parse(res.value); }
+  }catch(e){ stats = {}; }
+}
+async function saveStats(){
+  try{ await window.storage.set(STATS_KEY, JSON.stringify(stats), false); }
+  catch(e){ /* best-effort */ }
+}
+async function loadMode(){
+  try{
+    const res = await window.storage.get(MODE_KEY, false);
+    if(res && res.value && (res.value === 'all' || res.value === 'lower')){ mode = res.value; }
+  }catch(e){ /* default stays 'all' */ }
+}
+async function saveMode(){
+  try{ await window.storage.set(MODE_KEY, mode, false); }
+  catch(e){ /* best-effort */ }
+}
+async function loadQMode(){
+  try{
+    const res = await window.storage.get(QMODE_KEY, false);
+    if(res && res.value && ['mix','toNote','toPos'].includes(res.value)){ qMode = res.value; }
+  }catch(e){ /* default stays 'mix' */ }
+}
+async function saveQMode(){
+  try{ await window.storage.set(QMODE_KEY, qMode, false); }
+  catch(e){ /* best-effort */ }
+}
+
+function recordAnswer(stringId, fret, correct){
+  const k = cellKey(stringId, fret);
+  if(!stats[k]) stats[k] = {correct:0, total:0};
+  stats[k].total++;
+  if(correct) stats[k].correct++;
+}
+
+function randInt(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+
+function setMode(m){
+  mode = m;
+  document.getElementById('modeAll').classList.toggle('active', m==='all');
+  document.getElementById('modeLower').classList.toggle('active', m==='lower');
+  saveMode();
+  session = {correct:0, total:0};
+  updateSessionChip();
+  newQuestion();
+}
+
+function setQMode(m){
+  qMode = m;
+  document.getElementById('qmodeMix').classList.toggle('active', m==='mix');
+  document.getElementById('qmodeToNote').classList.toggle('active', m==='toNote');
+  document.getElementById('qmodeToPos').classList.toggle('active', m==='toPos');
+  saveQMode();
+  session = {correct:0, total:0};
+  updateSessionChip();
+  newQuestion();
+}
+
+function solutionPositions(note){
+  const positions = [];
+  stringPool().forEach(sId=>{
+    for(let f=1; f<=MAX_FRET; f++){
+      if(noteAt(sId,f) === note) positions.push({stringId:sId, fret:f});
+    }
+  });
+  return positions;
+}
+
+function addAnswerRow(container){
+  rowCount++;
+  const rowId = 'row'+rowCount;
+  const div = document.createElement('div');
+  div.className = 'multi-row';
+  div.id = rowId;
+  div.innerHTML = `
+    <div class="field-group">
+      <div class="field-label">弦</div>
+      <input class="ans small posinput" type="text" autocapitalize="characters" autocomplete="off" maxlength="1" placeholder="1〜4">
+    </div>
+    <div class="field-group">
+      <div class="field-label">フレット</div>
+      <input class="ans small posinput" type="number" inputmode="numeric" autocomplete="off" placeholder="1〜20" min="1" max="20">
+    </div>
+    <button class="row-remove" onclick="document.getElementById('${rowId}').remove()">×</button>`;
+  container.appendChild(div);
+}
+
+function newQuestion(){
+  awaitingNext = false;
+  document.getElementById('feedback').style.display = 'none';
+  document.getElementById('feedback').className = 'feedback';
+  document.getElementById('mainBtn').textContent = '回答する';
+
+  const pool = stringPool();
+  const stringId = pool[randInt(0, pool.length-1)];
+  const fret = randInt(1,MAX_FRET);
+  const note = noteAt(stringId, fret);
+  const type = qMode === 'mix' ? (Math.random() < 0.5 ? 'toNote' : 'toPos') : qMode;
+  current = {type, stringId, fret, note};
+
+  const s = STRINGS.find(s=>s.id===stringId);
+  const qType = document.getElementById('qType');
+  const qMain = document.getElementById('qMain');
+  const qSub = document.getElementById('qSub');
+  const answerArea = document.getElementById('answerArea');
+
+  if(type === 'toNote'){
+    qType.textContent = 'POSITION → NOTE';
+    qMain.textContent = s.name + ' ' + fret + 'F';
+    qSub.textContent = '';
+    answerArea.innerHTML = `
+      <div class="field-group">
+        <div class="field-label">音名を入力 (例: C#)</div>
+        <input class="ans" id="inpNote" type="text" autocapitalize="characters" autocomplete="off"
+          maxlength="3" placeholder="C#" inputmode="text">
+      </div>`;
+    setTimeout(()=>{ const el=document.getElementById('inpNote'); if(el) el.focus(); }, 50);
+  } else {
+    current.solution = solutionPositions(note);
+    qType.textContent = 'NOTE → ALL POSITIONS';
+    qMain.textContent = note;
+    qSub.textContent = '該当する位置を全部入力';
+    answerArea.innerHTML = `<div class="multi-rows" id="multiRows"></div>
+      <button class="add-row-btn" onclick="addAnswerRow(document.getElementById('multiRows'))">+ 位置を追加</button>`;
+    const container = document.getElementById('multiRows');
+    const startRows = Math.max(3, current.solution.length - 1);
+    for(let i=0; i<startRows; i++) addAnswerRow(container);
+  }
+}
+
+function normalizeNoteInput(v){
+  if(!v) return '';
+  return v.trim().toUpperCase().replace(/♯/g,'#').replace(/SHARP/g,'#');
+}
+function parseStringInput(v){
+  if(!v) return null;
+  const t = v.trim().toUpperCase();
+  if(['1','2','3','4'].includes(t)) return parseInt(t,10);
+  const found = STRINGS.find(s=>s.open === t);
+  return found ? found.id : null;
+}
+
+function onMainBtn(){
+  if(awaitingNext){ newQuestion(); return; }
+  checkAnswer();
+}
+
+function checkAnswer(){
+  if(!current) return;
+  let correct = false;
+  const fb = document.getElementById('feedback');
+  const fh = document.getElementById('fbHead');
+  const fd = document.getElementById('fbDetail');
+
+  if(current.type === 'toNote'){
+    const raw = document.getElementById('inpNote').value;
+    const norm = normalizeNoteInput(raw);
+    correct = norm === current.note;
+    session.total++;
+    if(correct) session.correct++;
+    recordAnswer(current.stringId, current.fret, correct);
+    saveStats();
+    fb.className = 'feedback ' + (correct ? 'correct' : 'wrong');
+    fh.textContent = correct ? '正解!' : '不正解';
+    fd.innerHTML = correct ? '' : ('正解: <b class="ok">' + current.note + '</b>');
+  } else {
+    const rows = document.querySelectorAll('#multiRows .multi-row');
+    const guessed = new Map();
+    rows.forEach(row=>{
+      const inputs = row.querySelectorAll('.posinput');
+      const sId = parseStringInput(inputs[0].value);
+      const fret = parseInt(inputs[1].value, 10);
+      if(sId && fret >= 1 && fret <= MAX_FRET){
+        guessed.set(cellKey(sId,fret), {stringId:sId, fret});
+      }
+    });
+
+    const solutionKeys = new Set(current.solution.map(p=>cellKey(p.stringId,p.fret)));
+    const guessedKeys = new Set(guessed.keys());
+
+    const found = [...solutionKeys].filter(k=>guessedKeys.has(k));
+    const missed = [...solutionKeys].filter(k=>!guessedKeys.has(k));
+    const extra = [...guessedKeys].filter(k=>!solutionKeys.has(k));
+
+    correct = missed.length === 0 && extra.length === 0;
+    session.total++;
+    if(correct) session.correct++;
+
+    current.solution.forEach(p=>{
+      recordAnswer(p.stringId, p.fret, found.includes(cellKey(p.stringId,p.fret)));
+    });
+    saveStats();
+
+    const posLabel = (k)=>{
+      const [sId,f] = k.split('-').map(Number);
+      const s = STRINGS.find(s=>s.id===sId);
+      return s.name + ' ' + f + 'F';
+    };
+
+    fb.className = 'feedback ' + (correct ? 'correct' : 'wrong');
+    fh.textContent = correct ? '正解! 全部見つけました' : '惜しい、抜けや勘違いがあります';
+    let detail = '';
+    detail += '<b class="ok">正しく回答: ' + (found.length ? found.map(posLabel).join(' / ') : 'なし') + '</b><br>';
+    if(missed.length) detail += '<b class="no">見つけられなかった: ' + missed.map(posLabel).join(' / ') + '</b><br>';
+    if(extra.length) detail += '<b class="no">この音ではない位置: ' + extra.map(posLabel).join(' / ') + '</b>';
+    fd.innerHTML = detail;
+  }
+
+  updateSessionChip();
+  fb.style.display = 'block';
+  document.getElementById('mainBtn').textContent = '次の問題へ';
+  awaitingNext = true;
+}
+
+function updateSessionChip(){
+  document.getElementById('sessionChip').textContent = session.correct + ' / ' + session.total;
+}
+
+function switchTab(tab){
+  const isQuiz = tab === 'quiz';
+  document.getElementById('viewQuiz').style.display = isQuiz ? 'block' : 'none';
+  document.getElementById('viewStats').style.display = isQuiz ? 'none' : 'block';
+  document.getElementById('tabQuiz').classList.toggle('active', isQuiz);
+  document.getElementById('tabStats').classList.toggle('active', !isQuiz);
+  if(!isQuiz) renderStats();
+}
+
+function accuracyColor(correct, total){
+  if(total === 0) return '#3a3226';
+  const pct = correct/total;
+  const hue = pct * 120;
+  return `hsl(${hue}, 55%, 45%)`;
+}
+
+function renderStats(){
+  let totalAll = 0, correctAll = 0;
+  Object.values(stats).forEach(v=>{ totalAll += v.total; correctAll += v.correct; });
+  document.getElementById('statTotal').textContent = totalAll;
+  document.getElementById('statAcc').textContent = totalAll ? Math.round(correctAll/totalAll*100) + '%' : '-';
+
+  const grid = document.getElementById('heatGrid');
+  let html = '<div class="corner"></div>';
+  for(let f=1; f<=MAX_FRET; f++){ html += `<div class="colhead">${f}</div>`; }
+  STRINGS.forEach(s=>{
+    html += `<div class="rowhead" style="color:${s.color}">${s.name}</div>`;
+    for(let f=1; f<=MAX_FRET; f++){
+      const k = cellKey(s.id, f);
+      const st = stats[k];
+      const bg = st ? accuracyColor(st.correct, st.total) : '#2b241c';
+      const label = noteAt(s.id, f);
+      html += `<div class="cell" style="background:${bg}">${st ? label : ''}</div>`;
+    }
+  });
+  grid.innerHTML = html;
+
+  const cells = Object.entries(stats)
+    .filter(([k,v]) => v.total >= 3)
+    .map(([k,v]) => {
+      const [sId, fret] = k.split('-').map(Number);
+      const s = STRINGS.find(s=>s.id===sId);
+      return { s, fret, pct: v.correct/v.total, total: v.total };
+    })
+    .sort((a,b) => a.pct - b.pct)
+    .slice(0,5);
+
+  const weakList = document.getElementById('weakList');
+  if(cells.length === 0){
+    weakList.innerHTML = '<div class="empty">3回以上挑戦した組み合わせが集まると、苦手なポジションがここに表示されます。</div>';
+  } else {
+    weakList.innerHTML = '<div class="field-label" style="margin-bottom:8px;">苦手なポジション TOP5</div>' +
+      cells.map(c => `
+        <div class="weak-item">
+          <span class="pos" style="color:${c.s.color}">${c.s.name} ${c.fret}F (${noteAt(c.s.id,c.fret)})</span>
+          <span class="pct">${Math.round(c.pct*100)}%</span>
+        </div>`).join('');
+  }
+}
+
+async function resetStats(){
+  if(!confirm('記録をすべてリセットします。よろしいですか?')) return;
+  stats = {};
+  await saveStats();
+  renderStats();
+}
+
+(async function init(){
+  await loadStats();
+  await loadMode();
+  await loadQMode();
+  document.getElementById('modeAll').classList.toggle('active', mode==='all');
+  document.getElementById('modeLower').classList.toggle('active', mode==='lower');
+  document.getElementById('qmodeMix').classList.toggle('active', qMode==='mix');
+  document.getElementById('qmodeToNote').classList.toggle('active', qMode==='toNote');
+  document.getElementById('qmodeToPos').classList.toggle('active', qMode==='toPos');
+  updateSessionChip();
+  newQuestion();
+
+  document.addEventListener('keydown', (e)=>{
+    if(e.key === 'Enter'){ onMainBtn(); }
+  });
+})();
+</script>
+</body>
+</html>
